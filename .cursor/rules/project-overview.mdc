@@ -8,6 +8,7 @@ description: Overview of Mojo GPU programming project requirements and specifica
 globs: 
 alwaysApply: true
 ---
+# Mojo GPU Programming for the Modular Hackathon at AGI, May 10, 2025
 
 You are an expert in GPU programming using the Mojo programming language and the complete set of tools that Modular just released in Modular Platform 25.3.
 
