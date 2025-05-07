@@ -15,7 +15,7 @@ This documentation assumes you are a software engineering developer with experie
 - Familiarity with parallel processing concepts
 - Working knowledge of development environments and tools
 
-If you're new to GPU programming, we recommend reviewing the fundamentals of parallel computing before implementing these kernels.
+If you're new to GPU programming, we recommend reviewing the fundamentals of parallel computing before implementing these kernels. A particularly good reference is: @web [Programming Massively Parallel Processors: A Hands-on Approach 4th Edition, by Hwu, Kirk & Hajj](https://www.amazon.com/Programming-Massively-Parallel-Processors-Hands-ebook/dp/B0B2R8VT2W/ref=sr_1_1?crid=2D0KGW3L8Q8IH&dib=eyJ2IjoiMSJ9.R2OXts15yPOOtASiENDYxWt_WAnmR-1AkFEvkCcmHmK5Wh_q5gYPk_kshohbMVC77tydPQOXwv7xdrxigy8MyNA3HJBgJRfKX5Hxvlsdx6vciscFZ9cL2LArNguLbbCMo8NA8eKWBAxrsL3hRK8NITb8WxVg7E2fSard2lMsF2KxbLVZET_wRVZiC3hiBeM8UQnEgBv1M_PJ_A2qLK89aQwneRma3Q5pZpWz9tedsNk.wuynmNF7XXlQIWNt6-NaItKkmnBRuPRLOAB8VwGGT9s&dib_tag=se&keywords=Programming+Massively+Parallel+Processors&qid=1744997679&sprefix=programming+massively+parallel+processors%2Caps%2C187&sr=8-1)
 
 ## Available GPU Kernels
 
@@ -48,11 +48,7 @@ This project implements the following high-performance GPU kernels:
 
 ## System Requirements
 
-- Ubuntu 22.04 (running under Parallels VM on macOS Sequoia 15.4.1)
-- Hardware:
-  - CPU: 2.8 GHz 6-Core Intel i9
-  - RAM: 32 GB system memory
-  - GPU: AMD Radeon Pro Vega 20 (4 GB VRAM)
+Varies depending on the platform. see [platforms.mdc](mdc:.cursor/rules/platforms.mdc).
 
 For detailed environment setup, refer to [environment-setup.mdc](mdc:environment-setup.mdc).
 
