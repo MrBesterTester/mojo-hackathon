@@ -12,14 +12,15 @@ You will do a GPU kernel programming task in Mojo such as:
 - Write a computationally fast cumulative sum (cumsum) operation.  
 - Write computationally fast image processing kernels such convolution or non-maximum suppression (NMS).  
 - Implement Radix sort on GPUs.
+Do not write any code at this time.
 
-Here is the platform you'll use to do the development of the kernel
-- Ubuntu 22.04 running as under the Parallels VM hosted by macOS Sequoia. 15.4.1.  The computer itself is a 15" 2018 MacBook Pro with a 2.8 GHz 6-Core Intel i9, 32 GB of system RAM, one GPU consist of a Radeon Pro Vega 20 with 4 GB of VRAM.
-- Please review this [Perplexity Thread](https://www.perplexity.ai/search/will-mojo-install-and-run-on-a-1WLFr6TvThGSg1Qu5UBSyQ) for a detailed discussion.
+Not only will the specific programming task vary, but the platform on which you develop as well as the GPUs (or CPUs) that you target for execution of the kernel vary as well.  If no GPU is targeted, then the kernel said to be CPU only in which the only optimization is generally SIMD type instructions.  The possible platforms and their GPU/CPU targets are described in this rules files: @platforms.mdc.
 
-Use their native package manager, `magic`, to get started installing those tools here in the "Magic" tab in the Installation Guide here: https://docs.modular.com/max/packages/
+Use their native package manager, `magic`, to get started installing those tools here in the "Magic" tab in the Installation Guide here: @web https://docs.modular.com/max/packages/
 
-Review the extensive documentation for their tools: https://docs.modular.com. Please pay attention these specific parts of that documentation for Mojo programming:
-	- Some easy tutorials on programming with Mojo are here: https://docs.modular.com/max/tutorials
-		- Source code for those examples is here: https://github.com/modular/modular/tree/main/examples/mojo
-	- The complete manual for the Mojo programming language is here: https://docs.modular.com/mojo/manual/
+Review the extensive documentation for their tools: @web https://docs.modular.com. Please pay attention these specific parts of that documentation for Mojo programming:
+	- Some easy tutorials on programming with Mojo are here: @web https://docs.modular.com/max/tutorials
+		- Source code for those examples is here: @web https://github.com/modular/modular/tree/main/examples/mojo
+	- The complete manual for the Mojo programming language is here: @web https://docs.modular.com/mojo/manual/
+
+Whenever there is a GPU or SIMD optimized version of the kernel you have programmed, please provide a CPU only version of it in the same file to compare the results fo the optimized version with the non-optimized (CPU-only) version as a built-in test of the optmized, GPU/SIMD version.  When running the kernel, the non-optmized version should run first followed by the optimized version afterwhich the results are compared.  If the results are fairly close, then the built-in test should report a PASS, otherwise a FAIL.  The tolerance of closeness should default to 3% and be declared in the code as a separate variable for easy, manual adjustment by the developer.

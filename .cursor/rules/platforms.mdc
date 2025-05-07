@@ -1,0 +1,32 @@
+---
+description: This document describes the possible platforms for developing and targeting Mojo programs for GPU programming
+globs: 
+alwaysApply: false
+---
+---
+description: This document describes the possible platforms for developing and targeting Mojo programs for GPU programming.
+globs: 
+alwaysApply: false
+---
+
+# Mojo Development and Target Platforms
+
+This document describes the possible platforms for developing and targeting Mojo programs for GPU programming. It provides a breakdown of the configurations of operating systems and GPUs you are likely to encounter.
+
+## Platform: MacBook2018
+
+**Description:** Ubuntu 22.04 running under the Parallels VM hosted by macOS Sequoia 15.4.1. The computer itself is a 15" 2018 MacBook Pro with a 2.8 GHz 6-Core Intel i9, 32 GB of system RAM, one GPU consisting of a Radeon Pro Vega 20 with 4 GB of VRAM. Little or no GPU optimization is expected here. Special care must be taken with the VM just to get SIMD instructions to work.
+
+Please review this [Perplexity Thread](mdc:https:/www.perplexity.ai/search/will-mojo-install-and-run-on-a-1WLFr6TvThGSg1Qu5UBSyQ) for a detailed discussion.
+
+## Platform: iMacM1
+
+**Description:** MacOS Sequoia 15.4.1 is both the development system host and also the target for the programming task. The computer here is an M1 iMac. However, since Modular doesn't support the GPU embedded in the M1 processor (or any of Apple's M-series processors), only SIMD optimizations are expected in the program you will write. Installing Modular tools on the iMac is very doable, however.
+
+## Platform: Colab
+
+**Description:** Google's Colab is an interesting possibility with Modular's Platform 25.3 because Modular's tools can be installed with the Python utility `pip`. This is important for Google's Colab because it is a Python notebook environment and most easily accessed as such. Google's Colab environment offers a fairly wide range of GPUs to target such as NVIDIA GPUs (as well as their own TPUs). The wait times for starting up are sometimes lengthy. Most importantly, the Colab environment disappears completely when the user logs out, so backing up to a private repo on GitHub is paramount. Google's Colab can be accessed through https://colab.research.google.com with administrative permission for Google services.
+
+## Platform: Brev
+
+**Description:** brev.nvidia.com (formerly: brev.dev) offers a wide variety of NVIDIA GPUs in a convenient manner called a launchable, a simple configuration of what kind of service (such as a container or VM) desired along with the precise type of NVIDIA GPU is desired. Although this specification is saved on the developer's NVIDIA account, the actual code and other changes to the selected environment may not be because this depends upon the service provider that Brev selects. The issue is the cost of storage of the containers for VM images. (This is apparently quite true of Google's Colab.) So again, pushing the code (and changes to the computing platform's environment) to a private GitHub repo is generally required.
