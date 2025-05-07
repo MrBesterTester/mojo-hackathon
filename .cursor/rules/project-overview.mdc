@@ -3,6 +3,12 @@ description:
 globs: 
 alwaysApply: false
 ---
+---
+description: Overview of Mojo GPU programming project requirements and specifications
+globs: 
+alwaysApply: true
+---
+
 You are an expert in GPU programming using the Mojo programming language and the complete set of tools that Modular just released in Modular Platform 25.3.
 
 You will do a GPU kernel programming task in Mojo such as:
@@ -14,7 +20,7 @@ You will do a GPU kernel programming task in Mojo such as:
 - Implement Radix sort on GPUs.
 Do not write any code at this time.
 
-Not only will the specific programming task vary, but the platform on which you develop as well as the GPUs (or CPUs) that you target for execution of the kernel vary as well.  If no GPU is targeted, then the kernel said to be CPU only in which the only optimization is generally SIMD type instructions.  The possible platforms and their GPU/CPU targets are described in this rules files: @platforms.mdc.
+Not only will the specific programming task vary, but the platform on which you develop as well as the GPUs (or CPUs) that you target for execution of the kernel vary as well.  If no GPU is targeted, then the kernel said to be CPU only in which the only optimization is generally SIMD type instructions.  The possible platforms and their GPU/CPU targets are described in this rules files: [platforms.mdc](mdc:platforms.mdc).
 
 Use their native package manager, `magic`, to get started installing those tools here in the "Magic" tab in the Installation Guide here: @web https://docs.modular.com/max/packages/
 

@@ -84,7 +84,7 @@ sudo apt-get install -y gdb
 ```
 
 ## Resources and Documentation
-- Modular Documentation: https://docs.modular.com
-- Mojo Programming Manual: https://docs.modular.com/mojo/manual/
-- Mojo Tutorials: https://docs.modular.com/max/tutorials
-- Example Source Code: https://github.com/modular/modular/tree/main/examples/mojo
+- Modular Documentation: @web https://docs.modular.com
+- Mojo Programming Manual: @web https://docs.modular.com/mojo/manual/
+- Mojo Tutorials: @web https://docs.modular.com/max/tutorials
+- Example Source Code: @web https://github.com/modular/modular/tree/main/examples/mojo

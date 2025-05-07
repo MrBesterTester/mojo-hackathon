@@ -3,6 +3,12 @@ description: This document provides best practices for GPU programming in Mojo, 
 globs: 
 alwaysApply: false
 ---
+---
+description: This document provides best practices for GPU programming in Mojo, focusing on AMD Radeon optimization techniques.
+globs: 
+alwaysApply: false
+---
+
 # GPU Programming Guidelines for Mojo
 
 This document provides best practices for GPU programming in Mojo, focusing on AMD Radeon optimization techniques.
