@@ -1,0 +1,90 @@
+---
+description: This document outlines the steps to set up a complete environment for Mojo GPU programming using Modular Platform 25.3.
+globs: 
+alwaysApply: false
+---
+# Mojo GPU Programming Environment Setup
+
+This document outlines the steps to set up a complete environment for Mojo GPU programming using Modular Platform 25.3.
+
+## System Requirements
+- Ubuntu 22.04 running under Parallels VM on macOS Sequoia 15.4.1
+- Host system: 15" 2018 MacBook Pro with 2.8 GHz 6-Core Intel i9
+- System RAM: 32 GB
+- GPU: Radeon Pro Vega 20 with 4 GB VRAM
+
+## Installation Steps
+
+### 1. Set up Ubuntu 22.04
+- Ensure the Parallels VM is properly configured with appropriate RAM and CPU allocation
+- Enable GPU pass-through in Parallels settings if available
+
+### 2. Install Modular Platform using Magic
+
+```bash
+# Update package lists
+sudo apt-get update
+
+# Install dependencies
+sudo apt-get install -y curl
+
+# Download and install the Magic CLI tool
+curl https://get.modular.com | sh -
+
+# Add Magic to your PATH (you may need to restart your terminal)
+modular auth
+
+# Install Modular MAX
+modular install max
+```
+
+### 3. Verify Installation
+
+```bash
+# Check installed version
+modular --version
+
+# Verify Mojo is installed properly
+mojo --version
+```
+
+### 4. Set up GPU Development Environment
+
+```bash
+# Install required GPU development packages as needed
+# This will depend on your specific hardware and requirements
+```
+
+### 5. Configure Environment Variables
+
+```bash
+# Add these to your ~/.bashrc or ~/.zshrc
+echo 'export PATH="$HOME/.modular/pkg/packages.modular.com_max/bin:$PATH"' >> ~/.bashrc
+echo 'export MODULAR_HOME="$HOME/.modular"' >> ~/.bashrc
+source ~/.bashrc
+```
+
+### 6. Test GPU Access
+
+```bash
+# Create a simple test file to verify GPU access
+mojo -c "from sys import gpu_count; print('Number of GPUs:', gpu_count())"
+```
+
+## Development Tools Setup
+
+### IDE Configuration
+- VS Code with Mojo extension
+- Cursor editor with Mojo support
+
+### Debugging Tools
+- Install necessary debugging tools
+```bash
+sudo apt-get install -y gdb
+```
+
+## Resources and Documentation
+- Modular Documentation: https://docs.modular.com
+- Mojo Programming Manual: https://docs.modular.com/mojo/manual/
+- Mojo Tutorials: https://docs.modular.com/max/tutorials
+- Example Source Code: https://github.com/modular/modular/tree/main/examples/mojo

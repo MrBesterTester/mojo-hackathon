@@ -1,0 +1,277 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Mojo GPU Development Workflow
+
+This document outlines the development workflow through a series of Jira tickets, providing a step-by-step guide for implementing GPU kernels using Mojo on MacBook with AMD Radeon hardware.
+
+## Epic: GPU Kernel Development Project Setup and Implementation
+
+### SETUP-1: Initial Project Setup and Environment Configuration
+**Priority:** Highest
+**Story Points:** 5
+
+**Description:**
+Set up the development environment on MacBook Pro for Mojo GPU kernel development.
+
+**Acceptance Criteria:**
+1. Successfully installed and configured:
+   - Parallels VM with Ubuntu 22.04
+   - Cursor IDE
+   - Modular Platform 25.3
+   - Mojo SDK
+   - Required development tools
+
+**Technical Details:**
+- MacBook Pro (2018, 15-inch)
+- CPU: 2.8 GHz 6-Core Intel i9
+- RAM: 32 GB
+- GPU: Radeon Pro Vega 20 (4 GB VRAM)
+- OS: macOS Sequoia 15.4.1
+
+**Steps:**
+1. Install Parallels Desktop
+   ```bash
+   # Download from Parallels website
+   # Install Ubuntu 22.04 ISO
+   ```
+
+2. Configure VM Resources
+   - Allocate 16GB RAM
+   - Enable GPU passthrough
+   - Configure 4 CPU cores
+
+3. Install Cursor IDE
+   ```bash
+   # Download from cursor.sh
+   # Install latest stable version
+   ```
+
+4. Install Modular Platform
+   ```bash
+   curl https://get.modular.com | sh -
+   modular auth
+   modular install mojo
+   ```
+
+5. **Important:** Verify the compatibility of all required libraries to avoid dependency conflicts.
+
+6. Set up project structure:
+   ```bash
+   mkdir mojo-gpu-kernels
+   cd mojo-gpu-kernels
+   # Initialize version control
+   git init
+   ```
+
+**Verification:**
+```bash
+# Verify Mojo installation
+mojo --version
+
+# Verify GPU support
+mojo gpu-check
+
+# Test basic GPU kernel
+mojo run tests/gpu_sanity_check.🔥
+```
+
+### SETUP-2: Project Dependencies and Configuration
+**Priority:** High
+**Story Points:** 3
+
+**Description:**
+Set up project configuration and install required dependencies.
+
+**Technical Details:**
+- Mojo version: 25.3
+- Build system: Modular Build
+- Testing framework: Mojo Test Suite
+- Benchmark framework: Mojo Benchmark Suite
+
+**Steps:**
+1. Initialize project configuration
+2. Set up build system
+3. Configure testing framework
+4. Set up benchmarking tools
+
+### IMPL-1: Transformer Attention Block Implementation
+**Priority:** High
+**Story Points:** 8
+
+**Description:**
+Implement the transformer attention block optimized for AMD Radeon Pro Vega 20.
+
+**Technical Specifications:**
+- Multi-head attention support
+- Configurable sequence lengths
+- Optimized memory access patterns
+- SIMD vectorization
+
+**Implementation Details:**
+1. Core attention mechanism
+2. Multi-head parallel processing
+3. Memory optimization
+4. Performance benchmarking
+
+### IMPL-2: Fast Fourier Transform (FFT) Implementation
+**Priority:** High
+**Story Points:** 8
+
+**Description:**
+Implement GPU-accelerated FFT supporting 1D, 2D, and 3D transforms.
+
+**Technical Specifications:**
+- Support for multiple dimensions
+- In-place and out-of-place transforms
+- Power-of-two size optimization
+- Batched operation support
+
+### IMPL-3: Cumulative Sum Implementation
+**Priority:** Medium
+**Story Points:** 5
+
+**Description:**
+Implement parallel cumulative sum operation.
+
+**Technical Specifications:**
+- Support for arbitrary input sizes
+- Both inclusive and exclusive scan
+- Work-efficient parallel algorithm
+- Optimized memory access pattern
+
+### IMPL-4: Image Processing Kernels
+**Priority:** Medium
+**Story Points:** 6
+
+**Description:**
+Implement convolution and NMS operations.
+
+**Technical Specifications:**
+- Configurable kernel sizes
+- Optimized border handling
+- Efficient memory access patterns
+- Support for various input formats
+
+### IMPL-5: Radix Sort Implementation
+**Priority:** Medium
+**Story Points:** 5
+
+**Description:**
+Implement GPU-accelerated radix sort.
+
+**Technical Specifications:**
+- Configurable radix size
+- Key-value pair support
+- Work-efficient algorithm
+- Optimized memory access
+
+### TEST-1: Comprehensive Testing Suite
+**Priority:** High
+**Story Points:** 5
+
+**Description:**
+Implement comprehensive testing suite for all kernels.
+
+**Testing Requirements:**
+- Unit tests for each kernel
+- Integration tests
+- Performance benchmarks
+- Comparison with CPU implementations
+
+### DOC-1: Documentation and Examples
+**Priority:** Medium
+**Story Points:** 3
+
+**Description:**
+Create comprehensive documentation and usage examples.
+
+**Documentation Requirements:**
+- API documentation
+- Usage examples
+- Performance guidelines
+- Optimization tips
+
+## Development Guidelines
+
+### Code Standards
+- Follow [code-standards.mdc](mdc:code-standards.mdc)
+- Use consistent naming conventions
+- Include comprehensive documentation
+- Implement error handling
+
+### Performance Requirements
+- Target 80% GPU utilization
+- Minimize host-device transfers
+- Optimize memory access patterns
+- Use efficient algorithms
+
+### Testing Requirements
+- 100% test coverage for critical paths
+- Performance regression tests
+- Memory leak checks
+- Error handling verification
+
+## Delivery Process
+
+1. **Development:**
+   - Create feature branch
+   - Implement functionality
+   - Add unit tests
+   - Document code
+
+2. **Review:**
+   - Code review
+   - Performance review
+   - Documentation review
+   - Test coverage review
+
+3. **Testing:**
+   - Run unit tests
+   - Run integration tests
+   - Perform benchmark tests
+   - Verify documentation
+
+4. **Deployment:**
+   - Merge to main branch
+   - Tag release
+   - Update documentation
+   - Publish benchmarks
+
+## Dependencies
+
+- Mojo SDK 25.3
+- Modular Platform Tools
+- GPU Computing SDK
+- Testing Framework
+- Benchmark Suite
+
+## Risk Management
+
+1. **Technical Risks:**
+   - GPU driver compatibility
+   - Performance optimization challenges
+   - Memory management issues
+
+2. **Mitigation Strategies:**
+   - Regular testing on target hardware
+   - Performance profiling
+   - Code reviews
+   - Memory analysis
+
+## Success Criteria
+
+1. All kernels pass unit and integration tests
+2. Performance meets or exceeds targets
+3. Documentation is complete and accurate
+4. Code follows established standards
+5. All acceptance criteria met
+
+## Support and Maintenance
+
+- Regular updates for compatibility
+- Performance optimization
+- Bug fixes
+- Documentation updates
