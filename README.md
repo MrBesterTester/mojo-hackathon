@@ -1,3 +1,6 @@
+<!--
+Derived from .cursor/rules/project-overview.mdc
+-->
 # Mojo GPU Programming for the Modular Hackathon at AGI, May 10, 2025
 
 ## Table of Contents
@@ -34,9 +37,9 @@
   - [Collaboration Best Practices](#collaboration-best-practices)
   - [Recommended Project Selection](#recommended-project-selection)
 
-You are an expert in GPU programming using the Mojo programming language and the complete set of tools that Modular just released in Modular Platform 25.3.
+With the AI support in this Cursor project, you will be able to code at the expert in GPU programming using the Mojo programming language and the complete set of tools that Modular just released in Modular Platform 25.3.
 
-You will do a GPU kernel programming task in Mojo such as:
+You will be able to do a GPU kernel programming task in Mojo such as:
 - Write a transformer attention block.  
 - Port a GPTQ implementation to NVIDIA H100 or AMD Mi300X  
 - Implement a Fast Fourier Transform (FFT) for GPU.  
