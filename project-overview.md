@@ -1,47 +1,38 @@
----
-description: 
-globs: 
-alwaysApply: false
----
-<!--  This shouldn't screw up Cursor, I think, because the Rule Type is Manual.
-description: Overview of Mojo GPU programming project requirements and specifications
-globs: 
-alwaysApply: true
--->
 # Mojo GPU Programming for the Modular Hackathon at AGI, May 10, 2025
 
 ## Table of Contents
-- [Introduction](mdc:#mojo-gpu-programming-for-the-modular-hackathon-at-agi-may-10-2025)
-- [Team Roles and Responsibilities](mdc:#team-roles-and-responsibilities-for-gpu-kernel-projects)
-  - [Core Team Member Roles](mdc:#core-team-member-roles)
-    - [1. Kernel Architect](mdc:#1-kernel-architect)
-    - [2. Infrastructure Engineer](mdc:#2-infrastructure-engineer)
-    - [3. Implementation Engineer](mdc:#3-implementation-engineer)
-    - [4. Optimization Specialist](mdc:#4-optimization-specialist)
-  - [Team Collaboration Process](mdc:#team-collaboration-process)
-- [GPU Kernel Project Effort Estimation](mdc:#gpu-kernel-project-effort-estimation)
-  - [Project Effort Estimates](mdc:#project-effort-estimates-increasing-order)
-  - [Implementation Considerations](mdc:#implementation-considerations)
-    - [Cumulative Sum](mdc:#cumulative-sum-cumsum)
-    - [Image Processing Kernels](mdc:#image-processing-kernels)
-    - [Radix Sort on GPU](mdc:#radix-sort-on-gpu)
-    - [Fast Fourier Transform](mdc:#fast-fourier-transform-fft)
-    - [Transformer Attention Block](mdc:#transformer-attention-block)
-    - [GPTQ Implementation Port](mdc:#gptq-implementation-port)
-  - [Platform-Specific Considerations](mdc:#platform-specific-considerations)
-  - [Success Factors](mdc:#success-factors)
-- [Hackathon Team Collaboration Strategy](mdc:#hackathon-team-collaboration-strategy)
-  - [Team-Based Approach for Single-Day Hackathon](mdc:#team-based-approach-for-single-day-hackathon)
-  - [General Team Structure](mdc:#general-team-structure)
-  - [Project Breakdown by Complexity](mdc:#project-breakdown-by-complexity)
-    - [Cumulative Sum](mdc:#cumulative-sum-cumsum-1)
-    - [Image Processing Kernels](mdc:#image-processing-kernels-1)
-    - [Radix Sort on GPU](mdc:#radix-sort-on-gpu-1)
-    - [Fast Fourier Transform](mdc:#fast-fourier-transform-fft-1)
-    - [Transformer Attention Block](mdc:#transformer-attention-block-1)
-    - [GPTQ Implementation Port](mdc:#gptq-implementation-port-1)
-  - [Collaboration Best Practices](mdc:#collaboration-best-practices)
-  - [Recommended Project Selection](mdc:#recommended-project-selection)
+- [Mojo GPU Programming for the Modular Hackathon at AGI, May 10, 2025](#mojo-gpu-programming-for-the-modular-hackathon-at-agi-may-10-2025)
+  - [Table of Contents](#table-of-contents)
+- [Team Roles and Responsibilities for GPU Kernel Projects](#team-roles-and-responsibilities-for-gpu-kernel-projects)
+  - [Core Team Member Roles](#core-team-member-roles)
+    - [1. Kernel Architect](#1-kernel-architect)
+    - [2. Infrastructure Engineer](#2-infrastructure-engineer)
+    - [3. Implementation Engineer](#3-implementation-engineer)
+    - [4. Optimization Specialist](#4-optimization-specialist)
+  - [Team Collaboration Process](#team-collaboration-process)
+- [GPU Kernel Project Effort Estimation](#gpu-kernel-project-effort-estimation)
+  - [Project Effort Estimates (Increasing Order)](#project-effort-estimates-increasing-order)
+  - [Implementation Considerations](#implementation-considerations)
+    - [Cumulative Sum (cumsum)](#cumulative-sum-cumsum)
+    - [Image Processing Kernels](#image-processing-kernels)
+    - [Radix Sort on GPU](#radix-sort-on-gpu)
+    - [Fast Fourier Transform (FFT)](#fast-fourier-transform-fft)
+    - [Transformer Attention Block](#transformer-attention-block)
+    - [GPTQ Implementation Port](#gptq-implementation-port)
+  - [Platform-Specific Considerations](#platform-specific-considerations)
+  - [Success Factors](#success-factors)
+- [Hackathon Team Collaboration Strategy](#hackathon-team-collaboration-strategy)
+  - [Team-Based Approach for Single-Day Hackathon](#team-based-approach-for-single-day-hackathon)
+    - [General Team Structure](#general-team-structure)
+    - [Project Breakdown by Complexity](#project-breakdown-by-complexity)
+      - [Cumulative Sum (cumsum)](#cumulative-sum-cumsum-1)
+      - [Image Processing Kernels](#image-processing-kernels-1)
+      - [Radix Sort on GPU](#radix-sort-on-gpu-1)
+      - [Fast Fourier Transform (FFT)](#fast-fourier-transform-fft-1)
+      - [Transformer Attention Block](#transformer-attention-block-1)
+      - [GPTQ Implementation Port](#gptq-implementation-port-1)
+  - [Collaboration Best Practices](#collaboration-best-practices)
+  - [Recommended Project Selection](#recommended-project-selection)
 
 You are an expert in GPU programming using the Mojo programming language and the complete set of tools that Modular just released in Modular Platform 25.3.
 
@@ -54,21 +45,18 @@ You will do a GPU kernel programming task in Mojo such as:
 - Implement Radix sort on GPUs.
 Do not write any code at this time.
 
-Not only will the specific programming task vary, but the platform on which you develop as well as the GPUs (or CPUs) that you target for execution of the kernel vary as well.  If no GPU is targeted, then the kernel said to be CPU only in which the only optimization is generally SIMD type instructions.  The possible platforms and their GPU/CPU targets are described in this rules files: [platforms.mdc](mdc:platforms.mdc).
+Not only will the specific programming task vary, but the platform on which you develop as well as the GPUs (or CPUs) that you target for execution of the kernel vary as well.  If no GPU is targeted, then the kernel said to be CPU only in which the only optimization is generally SIMD type instructions.  The possible platforms and their GPU/CPU targets are described in the platforms documentation.
 
-Use their native package manager, `magic`, to get started installing those tools here in the "Magic" tab in the Installation Guide here: @web https://docs.modular.com/max/packages/
+Use their native package manager, `magic`, to get started installing those tools here in the "Magic" tab in the Installation Guide here: https://docs.modular.com/max/packages/
 
-Review the extensive documentation for their tools: @web https://docs.modular.com. Please pay attention these specific parts of that documentation for Mojo programming:
-	- Some easy tutorials on programming with Mojo are here: @web https://docs.modular.com/max/tutorials
-		- Source code for those examples is here: @web https://github.com/modular/modular/tree/main/examples/mojo
-	- The complete manual for the Mojo programming language is here: @web https://docs.modular.com/mojo/manual/
+Review the extensive documentation for their tools: https://docs.modular.com. Please pay attention these specific parts of that documentation for Mojo programming:
+- Some easy tutorials on programming with Mojo are here: https://docs.modular.com/max/tutorials
+  - Source code for those examples is here: https://github.com/modular/modular/tree/main/examples/mojo
+- The complete manual for the Mojo programming language is here: https://docs.modular.com/mojo/manual/
 
 Whenever there is a GPU or SIMD optimized version of the kernel you have programmed, please provide a CPU only version of it in the same file to compare the results fo the optimized version with the non-optimized (CPU-only) version as a built-in test of the optmized, GPU/SIMD version.  When running the kernel, the non-optmized version should run first followed by the optimized version afterwhich the results are compared.  If the results are fairly close, then the built-in test should report a PASS, otherwise a FAIL.  The tolerance of closeness should default to 3% and be declared in the code as a separate variable for easy, manual adjustment by the developer.
 
 # Team Roles and Responsibilities for GPU Kernel Projects
-<!-- 
-Please review the Team Member roles and their responsbilities in the form of a liist that is common to all the kernel projects for which you're giving estimates below.
--->
 
 ## Core Team Member Roles
 
@@ -136,11 +124,7 @@ For effective collaboration during the hackathon:
 
 This role distribution ensures specialized focus while maintaining team cohesion, and can be applied consistently across any of the GPU kernel projects in the hackathon.
 
-
 # GPU Kernel Project Effort Estimation
-<!-- 
-Look at the projects suggested in @project-overview.mdc and give me an estimate of the effort required to implement each one. Use @dev-order.mdc as a resource to decide. List the projects in increasing order of effort. Make the result applicable to @project-overview.mdc.
--->
 
 Below is an effort estimation for each of the GPU kernel projects suggested in the Modular Hackathon, ordered from least to most effort required:
 
@@ -196,7 +180,7 @@ Below is an effort estimation for each of the GPU kernel projects suggested in t
 ## Success Factors
 
 For all projects:
-1. Follow the development workflow in [dev-order.mdc](mdc:.cursor/rules/dev-order.mdc)
+1. Follow the development workflow in the development order documentation
 2. Implement both optimized and non-optimized versions for validation (per project requirements)
 3. Adhere to the 3% tolerance requirement for result validation
 4. Carefully consider memory access patterns and thread organization
@@ -205,9 +189,6 @@ For all projects:
 The cumulative sum and image processing kernels provide the best entry points for those new to Mojo GPU programming, while the transformer attention block and GPTQ implementation represent the most challenging projects requiring deep GPU expertise.
 
 # Hackathon Team Collaboration Strategy
-<!-- 
-I will be taking part of a full day Hackathon with 3 other people on a project just like one of those above. Given that any one of those projects is estimated to take anywhere from 2 to 7 days, how would each of these projects be broken down for a 4 person team? Please use @dev-order.mdc for the development process flow and any of the nVidia GPU environments in @environment-setup.mdc. Format your report so that it an be appended to @project-overview.mdc. You may also find @project-structure.mdc to be helpful.
--->
 
 ## Team-Based Approach for Single-Day Hackathon
 
@@ -337,10 +318,10 @@ This project is too complex for a one-day hackathon with complete implementation
 
 2. **Development Environment**
    - Use Brev.dev with NVIDIA GPU for consistent environment
-   - Set up shared repository following [project-structure.mdc](mdc:.cursor/rules/project-structure.mdc)
+   - Set up shared repository following project structure standards
    - Prepare branch strategy for parallel development
 
-3. **Follow Process Flow from [dev-order.mdc](mdc:.cursor/rules/dev-order.mdc)**
+3. **Follow Development Process Flow**
    - Start with project requirements understanding
    - Establish clear platform targets
    - Set up environment before coding
@@ -369,5 +350,4 @@ For a one-day hackathon with 4 team members, the most suitable projects (in orde
 3. **Radix Sort** - Can be scoped appropriately with clear milestones
 4. **FFT** - Consider only if team has prior experience with the algorithm
 
-The Transformer Attention Block and GPTQ Implementation are too complex for complete implementation in a single day, but specific components could be targeted if the team has relevant expertise.
-
+The Transformer Attention Block and GPTQ Implementation are too complex for complete implementation in a single day, but specific components could be targeted if the team has relevant expertise. 
