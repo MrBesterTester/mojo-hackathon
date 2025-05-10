@@ -3,6 +3,10 @@ Derived from .cursor/rules/project-overview.mdc
 -->
 # Mojo GPU Programming for the Modular Hackathon at AGI, May 10, 2025
 
+Update 5/10/2025 - Added Mojo (and CUDA) code for the Newton Raphson method of solving polynomials.
+- See [What is the Newton-Raphson method](https://www.perplexity.ai/search/638ddf1d-6989-4880-b8ea-e4e8a5fc2923) for the research.
+- There are also separate markdown files for the Mojo version as well as the CUDA version.
+
 ## Table of Contents
 - [Mojo GPU Programming for the Modular Hackathon at AGI, May 10, 2025](#mojo-gpu-programming-for-the-modular-hackathon-at-agi-may-10-2025)
   - [Table of Contents](#table-of-contents)
