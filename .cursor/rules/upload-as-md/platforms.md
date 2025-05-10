@@ -1,0 +1,302 @@
+---
+description: This document describes the possible platforms for developing and targeting Mojo programs for GPU programming
+globs: 
+alwaysApply: false
+---
+---
+description: This document describes the possible platforms for developing and targeting Mojo programs for GPU programming.
+globs: 
+alwaysApply: false
+---
+
+# Mojo Development and Target Platforms
+
+This document describes the possible platforms for developing and targeting Mojo programs for GPU programming. It provides a breakdown of the configurations of operating systems and GPUs you are likely to encounter.
+
+## Platform: MacBook2018
+
+**Description:** Ubuntu 22.04 running under the Parallels VM hosted by macOS Sequoia 15.4.1. The computer itself is a 15" 2018 MacBook Pro with a 2.8 GHz 6-Core Intel i9, 32 GB of system RAM, one GPU consisting of a Radeon Pro Vega 20 with 4 GB of VRAM. Little or no GPU optimization is expected here. Special care must be taken with the VM just to get SIMD instructions to work.
+
+Please review this @web [Perplexity Page: Will Mojo run on Linux?](mdc:https:/www.perplexity.ai/page/will-mojo-run-on-linux-k3yl4trNRKeoUpXeQK6pBg) for a detailed discussion.
+
+## Platform: iMacM1
+
+**Description:** MacOS Sequoia 15.4.1 is both the development system host and also the target for the programming task. The computer here is an M1 iMac. However, since Modular doesn't support the GPU embedded in the M1 processor (or any of Apple's M-series processors), only SIMD optimizations are expected in the program you will write. Installing Modular tools on the iMac is very doable, however.
+
+## Platform: Colab w/ Cursor or VScode
+
+**Description:** Google's Colab is an interesting possibility with Modular's Platform 25.3 because Modular's tools can be installed with the Python utility `pip`. This is important for Google's Colab because it is a Python notebook environment and most easily accessed as such. Google's Colab environment offers a fairly wide range of GPUs to target such as NVIDIA GPUs (as well as their own TPUs).
+
+Google Colab does support remote access via SSH, which allows you to use Cursor or VSCode instead of the browser-based interface. But in order to Cursor or VScode you'll need `Cloudflared` or `pyngrok` to actually facilitate technologies that make SSH connections to Colab possible. Let me clarify:
+
+### How These Technologies Work Together
+
+1. **SSH** is the protocol that Cursor and VSCode use to connect to remote environments
+   - Both IDEs use the "Remote - SSH" extension to establish these connections
+
+2. **Cloudflared and pyngrok** are tunneling services that solve a fundamental problem:
+   - Colab instances don't have public IP addresses accessible from the internet
+   - They create secure tunnels from the public internet to your private Colab VM
+
+### The Connection Chain
+
+When using Colab with VSCode/Cursor:
+
+```
+Cursor/VSCode → SSH → Cloudflared/ngrok tunnel → Colab VM
+```
+
+- Cloudflared (by Cloudflare) creates a secure tunnel to expose the SSH server running on Colab
+- Similarly, pyngrok (a Python wrapper for ngrok) creates tunnels to expose ports from Colab
+
+### Why You Need These Tunneling Services
+
+Without Cloudflared or ngrok:
+- Your Colab VM is isolated in Google's infrastructure
+- There's no direct way to SSH into it from your local machine
+- The tunneling services create the "bridge" that makes the connection possible
+
+### Which To Choose
+
+- **Cloudflared** (via colab-ssh): Generally more reliable and secure
+- **ngrok**: More widely known but has connection limits on free accounts
+
+These tools are complementary to SSH, not alternatives - they're the enabling technology that allows you to use SSH with Cursor or VSCode to connect to your Colab environment.
+
+Here are two different methods to connect your Python Notebook in Colab to your Cursor or VScode IDE using SSH.
+
+#### Using Colab-SSH with Cloudflared
+
+This is the most recommended approach:
+
+1. In your Colab notebook, install and run colab-ssh:
+   ```python
+   !pip install colab_ssh --upgrade
+   from colab_ssh import launch_ssh_cloudflared
+   
+   launch_ssh_cloudflared(password="your_password_here")
+   ```
+2. Follow the "Client machine configuration" instructions that appear, which will involve:
+   - Downloading the Cloudflared client for your OS
+   - Adding the connection configuration to your SSH config file
+
+3. Then connect from Cursor or VSCode using the "Remote SSH" extension
+
+#### Using ngrok Alternative
+
+Another approach uses ngrok:
+
+```python
+!pip install jupyterlab pyngrok -q
+!nohup jupyter lab --ip=0.0.0.0 &
+
+from pyngrok import ngrok
+print(ngrok.connect(8888))
+```
+
+### Benefits for GPU Development
+
+Connecting via SSH is especially useful for Mojo GPU development because:
+
+1. You get the full power of Cursor/VSCode features (code navigation, completion, etc.)
+2. You can connect to Colab's NVIDIA GPUs from a familiar environment
+3. You can work with a proper project structure instead of notebook cells
+4. You maintain your preferred IDE workflow while leveraging Colab's free GPU resources
+
+### Important Considerations
+
+- The wait times for starting up are sometimes lengthy.
+- The Colab environment is ephemeral - it will be deleted when the session ends
+- Make sure to back up your code to GitHub or Google Drive
+- Connection details (hostname/port) change with each new Colab session
+- Free Colab has runtime limitations (disconnects after idle periods)
+- For more persistent development, Brev might be a better option as mentioned in your platforms documentation
+
+Google's Colab can be accessed through @web https://colab.research.google.com with administrative permission for Google services.
+
+## Platform: Colab w/ its web console and Gemini
+<!--
+Now let's suppose that I use just the console interface to Google's Colab. I assume that I get to use Google's very power Gemini model for coding. How would I go about transferring my rules from @rules , and installing them into Gemini for a comparable coding assistance?
+-->
+Note: the Cursor rules file, [dev-order.mdc](mdc:.cursor/rules/dev-order.mdc), was reviewed for this section.
+
+This section explains how to transfer the Mojo development rules from Cursor to Google Colab.
+
+### Transferring Rules from Cursor to Google Colab
+
+While Google Colab doesn't have a direct equivalent to Cursor's custom rules feature, there are several approaches to incorporate your development guidelines into Colab:
+
+#### Option 1: Upload Rules as Markdown Files
+
+The most straightforward approach is to upload your `.mdc` rule files as standard Markdown (`.md`) files to your Colab environment.
+
+1. **Convert your .mdc files to .md files** - You've already created a Markdown version of your project overview file
+2. **Upload to Colab** - Upload these files to your Colab runtime storage
+3. **Reference them in your notebooks** - You can read and display them in notebook cells
+
+```python
+# Example: Load and display rule content in a Colab notebook
+import os
+import markdown
+from IPython.display import display, HTML
+def display_rule(filename):
+    with open(filename, 'r') as f:
+        content = f.read()
+    display(HTML(markdown.markdown(content)))
+    
+# Example usage
+display_rule('project-overview.md')
+```
+Well, there are only about dozen or so files, so simply doing the change of suffix from `.mdc` to `.md` could could just as easily be done manually.
+- Also, the code could at least iterate over the dozen or so files.
+
+#### Option 2: Create a Context Guide Notebook
+
+Create a dedicated notebook that serves as your development guide for Mojo GPU development:
+
+1. **Create a new notebook** called `mojo_gpu_dev_guide.ipynb`
+2. **Combine your rules content** into this notebook using markdown cells
+3. **Organize with headers, links, and collapsible sections** for easy reference
+4. **Include code examples** demonstrating the principles
+
+#### Option 3: Use Gemini System Instructions
+
+For Gemini AI assistance while coding in Colab, you can provide system instructions at the beginning of your conversation:
+
+```python
+# Import Google's Generative AI library
+from google.colab import userdata
+import google.generativeai as genai
+
+# Configure with your API key
+genai.configure(api_key=userdata.get('GOOGLE_API_KEY'))
+
+# Create a model instance with system instructions based on your rules
+model = genai.GenerativeModel(
+    model_name="gemini-2.0-pro",
+    system_instruction="""
+    # Mojo GPU Programming Rules
+    
+    You are an AI assistant specialized in Mojo GPU programming. Follow these development guidelines:
+    
+    ## Project Structure
+    - Organize code according to standard Mojo GPU project structure
+    - Place kernels in src/kernels/ directory
+    - Place tests in tests/ directory
+    
+    ## GPU Programming
+    - Optimize code for AMD Radeon GPUs
+    - Follow best practices for memory access patterns
+    - Apply vectorization techniques
+    
+    ## Code Style
+    - Use consistent naming conventions
+    - Document all functions with clear explanations
+    - Include performance considerations in comments
+    
+    When helping develop Mojo GPU code, always adhere to these guidelines and suggest optimizations specific to the target platform.
+    """
+)
+
+# Example usage
+response = model.generate_content("Write a Mojo kernel for matrix multiplication optimized for AMD GPUs")
+print(response.text)
+```
+
+Well, this doesn't take into consideration the entire content of the files in Cursor's rules folder.
+
+#### Option 4: Implement as Python Helper Module
+
+Create a Python module that contains your rules and provides helper functions for Mojo GPU development:
+
+```python
+# Create a file called mojo_gpu_guide.py
+def show_development_order():
+    """Display the recommended development order for Mojo GPU projects"""
+    order = [
+        "1. Understand project requirements and platforms",
+        "2. Set up environment with Modular Platform 25.3",
+        "3. Create project structure",
+        "4. Develop GPU-optimized code",
+        "5. Implement testing and benchmarking"
+    ]
+    for step in order:
+        print(step)
+
+def project_structure_guide():
+    """Show the standard project structure"""
+    structure = """
+    project_name/
+    ├── src/
+    │   ├── kernels/
+    │   │   └── *.mojo
+    │   └── utils/
+    ├── tests/
+    │   └── *.mojo
+    ├── benchmarks/
+    │   └── *.mojo
+    └── README.md
+    """
+    print(structure)
+
+# Additional helper functions for other rules...
+```
+
+Then import and use this in your notebooks:
+
+```python
+import mojo_gpu_guide
+
+# Show development order
+mojo_gpu_guide.show_development_order()
+
+# Get project structure guidance
+mojo_gpu_guide.project_structure_guide()
+```
+Again, this doesn't take into consideration the entire content of the files in Cursor's rules folder.
+
+#### Recommendation
+
+For the most effective transfer of your rules to the Colab environment, I recommend a combination of **Option 2 (Context Guide Notebook)** and **Option 3 (Gemini System Instructions)**:
+
+1. Create a central reference notebook with all your organized rules
+2. For active development notebooks, use system instructions for Gemini that provide concise versions of your key guidelines
+3. Include links to your more detailed rule files for deeper dives into specific topics
+
+This combination gives you both comprehensive documentation and consistent AI assistance that follows your established development practices.
+
+Comment: I'm not really happy with this, partly because 
+- It uses multiple notebooks, and Colab is ephermeral
+- The linkage to more detailed rules is not clear nor where they are to be located.
+The idea is combine all the rules from Cursor into one gigantic Python notebook. 🤔
+
+
+## Platform: Brev
+
+**Description:** @web https://brev.nvidia.com (formerly: brev.dev) offers a wide variety of NVIDIA GPUs in a convenient manner called a launchable, a simple configuration of what kind of service (such as a container or VM) desired along with the precise type of NVIDIA GPU is desired. Although this specification is saved on the developer's NVIDIA account, the actual code and other changes to the selected environment may not be because this depends upon the service provider that Brev selects. The issue is the cost of storage of the containers for VM images. (This is apparently quite true of Google's Colab.) So again, pushing the code (and changes to the computing platform's environment) to a private GitHub repo is generally required.
+
+### Setting up Brev - Cheat Sheet
+
+Set up your instance on https://brev.nvidia.com.  After you launch return to a terminal window on your host:
+```
+brev login
+brev ls # wait for your instance to be listed as running.
+brev shell agi-hackathon # will list the IP address
+# now create the project folder on the remote
+ssh ubuntu@172.27.19.133 # Does not work
+# do this instead at the command line to
+cursor --remote ssh-remote+ubuntu@172.27.19.133 /home/ubuntu/agi-hackathon
+```
+Now that the Cursor on your host and the remote with the GPU are connected, setup magic and then mojo on the remote.  Then do the exercises here: 
+https://docs.modular.com/mojo/manual/gpu/intro-tutorial#3-define-a-simple-kernel
+
+When done, be sure to clean up your instance:
+```
+brev ls
+# First it will be STOPPED and then finally disappear:
+brev delete agi-hackathon 
+```
+
+### Other Alternatives
+
+Particularly, alternatives to Brev that are also alternatives to AWS: @web [Why is using AWS such a pain? Are there better alternatives for nVidia GPUs? What about brev.dev.com, now brev.nvidia.com?](mdc:https:/www.perplexity.ai/search/63b95df0-edaf-4fa9-9057-ff3182a13981)
